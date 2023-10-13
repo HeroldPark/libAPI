@@ -1,0 +1,8 @@
+bin/
+build/
+node_modules/
+log.config.path_IS_UNDEFINED/
+node_modules/
+.gradle
+.settings
+.vscode

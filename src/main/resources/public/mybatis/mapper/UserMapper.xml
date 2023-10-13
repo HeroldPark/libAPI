@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jungsoo.web.dao.UserDAO">
+  <sql id="sqlWhere">
+    where 1=1
+      <if test="searchType == 'all'.toString()">
+        AND ( T_USER_NO LIKE concat('%', #{searchKey}, '%')
+          or
+          T_USER_NAME LIKE concat('%', #{searchKey}, '%')
+          or
+          T_USER_BIRTH LIKE concat('%', #{searchKey}, '%')
+        )
+      </if>
+      <if test="searchType == 'userNo'.toString()">
+        AND T_USER_NO LIKE concat('%', #{tUserNo}, '%')
+      </if>
+      <if test="searchType == 'userName'.toString()">
+        AND T_USER_NAME LIKE concat('%', #{tUserName}, '%')
+      </if>
+      <if test="searchType == 'userBirth'.toString()">
+        AND T_USER_BIRTH LIKE concat('%', #{tUserBirth}, '%') 
+      </if>
+  </sql>
+  
+  <select id="readUser" resultType="user">
+  	SELECT * FROM tbl_idcard
+	  WHERE T_USER_NO = #{userNo}
+  </select>
+
+  <select id="countUser" parameterType="user" resultType="int">
+    select count(*) from tbl_user
+    <include refid="sqlWhere"></include>
+  </select>
+
+  <select id="selectUser" parameterType="user" resultType="user">
+    select * from tbl_idcard	
+    <include refid="sqlWhere"></include>
+  </select>
+
+  <insert id="insertUser" parameterType="user">
+    INSERT INTO tbl_idcard (
+      Seq, 
+      T_USER_NO, 
+      T_USER_NAME, 
+      T_USER_HP,
+      T_USER_BIRTH,
+      T_REG_DATE
+    ) VALUES (
+      #{seq},
+      #{tUserNo},
+      #{tUserName},
+      #{tUserHp},
+      #{tUserBirth},
+      now()
+    )
+  </insert>
+
+  <!-- jsp에서 변수표현 EL 표기법 ${변수명}, MyBatis에서 변수표현 #{변수명} -->
+  <update id="updateUser">
+    UPDATE tbl_idcard 
+    SET
+      <if test="tUserName !='' and tUserName != null">
+        T_USER_NAME=#{tUserName},
+      </if>
+      <if test='tUserHp !="" and tUserHp != null'>
+        T_USER_HP=#{tUserHp},
+      </if>
+      <if test="tUserBirth !='' and tUserBirth != null">
+        T_USER_BIRTH=#{tUserBirth},
+      </if>
+      T_DEL_YN='Y',
+      T_DEL_DATE=now()
+    WHERE 
+      T_USER_NO=#{tUserNo}
+  </update>
+
+  <delete id="deleteUser">
+    DELETE FROM tbl_idcard WHERE T_USER_NO = #{userNo}
+  </delete>
+  
+</mapper>

@@ -1,0 +1,63 @@
+git init
+git add .
+git commit -m "Spring boot Web First commit"
+git branch -M master
+git remote add origin https://github.com/HeroldPark/SpringBootWeb.git
+git push -u origin master
+
+새로운 파일 작업 후 github에 올릴때
+git add .   # 추가
+
+git config --list
+git remote -v
+git log
+
+git rm --cached <file>...
+
+< 롤 플레이 - company-project 시작 >
+> cd "FirstProj"
+> git clone https://github.com/HeroldPark/SpringBootWeb.git freshman    # freshman 디렉토리에 다운받는다.
+
+파일 작업 한다...
+> git checkout -b freshman      # 신입을 위한 브랜치를 만들어 준다.
+> git push origin freshman      # 신입은 freshman 브랜치에 자신의 소스를 올린다.
+
+신입은 자신의 소스 코드를 github에 모두 올리고 github로 간다.
+github에서 "Compare and pull request"를 클릭한다.
+그리고 나서 Editor 화면에서 멘트를 입력한 후 "Create for request"를 누른다.
+그러면 Pull Request가 한개 생긴다.
+개발 리더가 github에서 신입이 작성한 Pull Request를 보고 소스 코드를 검토한다.
+부족한 부분이 있으면 Revice Change를 요청하고 잘 되었으면 Merge Pull Request를 클릭한다...
+그러면 신입의 소스 코드가 master에 합쳐진다...
+
+개발 리더도 그 동안 작업한 내용이 있으니 master와 상이한 부분이 발생한다. 그러므로 master와 동기화를 시켜 줘야 한다...
+일단 개발 리더가 작어반 내용을 저장한다...
+> git add .
+> git commit -m "Second commit"
+> git pull origin master        # master로부터 새로운 소스를 받아온다. (push는 하지 않는다.)
+
+그러면 신입이 작업한 내용과 개발 리더가 작업한 소스가 개발리더 로컬에서 합쳐지게 된다.
+그러면 개발리더가 master로 push 하게 된다...
+> git push origin master
+
+이렇게 하면 github master는 개발리더의 소스까지 합쳐지게 된다...
+이런 식으로 계속 돌아가면서 add => push => pull 을 반복하게 된다.
+
+< Error 처리 >
+1. 
+$ git push -u origin master
+error: src refspec master does not match any
+error: failed to push some refs to 'origin'
+=> 해당 에러는 깃허브에서 pull 없이 push할 경우 기존 내용을 삭제하거나 하는 문제가 생길 수 있기 때문에,
+   이런 문제를 피하고자 에러 메세지를 발생시키는 것
+=> 다음과 같이 하면 해결된다.
+> git init
+> git add .
+> git commit -m "message"
+
+2. non-fast-forward
+To https://github.com/HeroldPark/SpringBootWeb.git
+ ! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/HeroldPark/SpringBootWeb.git'
+=> .gitignore, REAME.md 파일로 인해 발생함...
+=> git push origin +master
