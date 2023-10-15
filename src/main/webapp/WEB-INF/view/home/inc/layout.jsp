@@ -6,7 +6,9 @@
 <html>
 
 	<head>
-	
+		<link href="/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+		
+		<script src="/js/jquery-3.6.4.min.js"></script>
 	</head>
 	
 	<body>

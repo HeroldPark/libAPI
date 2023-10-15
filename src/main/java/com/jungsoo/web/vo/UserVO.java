@@ -17,4 +17,6 @@ public class UserVO {
 
 	private String searchType; // search Type
 	private String searchKey; // search Key
+
+	private int result; // Query 결과
 }

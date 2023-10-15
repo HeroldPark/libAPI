@@ -12,6 +12,7 @@ public class HomeController {
 
 	static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
+	// Client, Server간에 GET으로 request, Object로 response
 	@RequestMapping("/")
 	public String index(Model model) {
 
@@ -19,6 +20,16 @@ public class HomeController {
 		model.addAttribute("msg", "서버로부터의 메시지 입니다.");
 
 		return "home.index";
+	}
+
+	// Client, Server간에 Ajax JSON Object로 request, Object로 response
+	@RequestMapping("/main")
+	public String home(Model model) {
+
+		logger.debug("HomeController /main 시작. \t {}", new Date());
+		model.addAttribute("msg", "서버로부터의 메시지 입니다.");
+
+		return "home.main";
 	}
 
 	@RequestMapping("/help")

@@ -54,7 +54,8 @@
       #{tUserName},
       #{tUserHp},
       #{tUserBirth},
-      now()
+      to_char(sysdate,'yyyy.mm.dd hh24:mi')
+      -- now()
     )
   </insert>
 
@@ -72,7 +73,8 @@
         T_USER_BIRTH=#{tUserBirth},
       </if>
       T_DEL_YN='Y',
-      T_DEL_DATE=now()
+      T_DEL_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
+      -- T_DEL_DATE=now()
     WHERE 
       T_USER_NO=#{tUserNo}
   </update>
