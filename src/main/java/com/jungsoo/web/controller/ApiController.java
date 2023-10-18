@@ -1,6 +1,5 @@
 package com.jungsoo.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,10 +30,10 @@ public class ApiController {
 	public String UserApi(@RequestParam("mode") String mode,
 			@RequestParam(value = "searchType", required = false) String searchType,
 			@RequestParam(value = "searchKey", required = false) String searchKey,
-			@RequestParam(value = "USER_NO", required = false) String userNo,
-			@RequestParam(value = "USER_NAME", required = false) String userName,
-			@RequestParam(value = "USER_HP", required = false) String userHp,
-			@RequestParam(value = "USER_BIRTH", required = false) String userBirth, Model model,
+			@RequestParam(value = "userNo", required = false) String userNo,
+			@RequestParam(value = "userName", required = false) String userName,
+			@RequestParam(value = "userHp", required = false) String userHp,
+			@RequestParam(value = "userBirth", required = false) String userBirth, Model model,
 			HttpServletRequest request) throws Exception {
 
 		logger.debug("ApiController /UserApi Processing. \t {}, {}", mode, userNo);

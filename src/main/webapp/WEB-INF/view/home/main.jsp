@@ -11,16 +11,17 @@
         <button onclick="mainDelete()" type="button">탈퇴</button>
 
         <script>
-            var inputData = {};
 
             function mainRegister() {
                 console.log("mainRegister Start.");
 
-                inputData["mode"] = "idcardUserReg";
-                inputData["userNo"] = "123456789";
-                inputData["userName"] = "홍길동";
-                inputData["userHp"] = "010-8901-2738";
-                inputData["userBirth"] = "1997-11-25";
+                const inputData = {
+                    mode        : "idcardUserReg",
+                    userNo      : "1234567893",
+                    userName    : '홍길동',
+                    userHp      : "010-8901-2788",
+                    userBirth   : "1997-11-25"
+                }
 
                 $.ajax({
                     url: "<c:url value='/mainRegister'/>",
@@ -41,11 +42,15 @@
             function mainSearch() {
                 console.log("mainSearch Start.");
 
-                inputData["mode"] = "idcardUserSearch";
-                inputData["userNo"] = "123456789";
-                inputData["userName"] = "홍길동";
-                inputData["userHp"] = "010-8901-2738";
-                inputData["userBirth"] = "1997-11-25";
+                const inputData = {
+                    mode        : "idcardUserSearch",
+                    searchType  : "all",             // all, userNo, userName, userBirth
+                    searchKey   : "12345",          // userNo, userName, userBirth 의 값 중에서 아무것이나 입력
+                    userNo      : "123456789",
+                    userName    : '홍길동',
+                    userHp      : "010-8901-2788",
+                    userBirth   : "1997-11-25"
+                }
 
                 $.ajax({
                     url: "<c:url value='/mainSearch'/>",
@@ -68,11 +73,10 @@
             function mainDelete() {
                 console.log("mainDelete Start.");
 
-                inputData["mode"] = "idcardUserDel";
-                inputData["userNo"] = "123456789";
-                inputData["userName"] = "홍길동";
-                inputData["userHp"] = "010-8901-2738";
-                inputData["userBirth"] = "1997-11-25";
+                const inputData = {
+                    mode : "idcardUserDel",
+                    userNo : "123456789",
+                }
 
                 $.ajax({
                     url: "<c:url value='/mainDelete'/>",

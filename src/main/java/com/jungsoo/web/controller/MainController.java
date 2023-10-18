@@ -27,15 +27,15 @@ public class MainController {
     
     @ResponseBody
     @RequestMapping(value = "/mainRegister", method = RequestMethod.POST)
-    public UserVO mainRegister(@RequestBody String info) throws Exception {
+    public UserVO mainRegister(@RequestBody String params) throws Exception {
 
         logger.debug("MainController /mainRegister Processing.");
 
         // json으로 넘어온 파라미터를 map으로 변환
 		ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
         try {
-			map = mapper.readValue(info,new TypeReference<HashMap<String, String>>() {});
+			map = mapper.readValue(params,new TypeReference<HashMap<String, String>>() {});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,22 +58,21 @@ public class MainController {
 		userVO.setTUserBirth(userBirth);
 		int result = userService.insertUser(userVO);
         userVO.setResult(result);
-		// logger.debug("ApiController tUserName={}", userVO.getTUserName());
 
         return userVO;
     }
 
     @ResponseBody
     @RequestMapping(value = "/mainSearch", method = RequestMethod.POST)
-    public List<UserVO> mainSearch(@RequestBody String info) throws Exception {
+    public List<UserVO> mainSearch(@RequestBody String params) throws Exception {
 
         logger.debug("MainController /mainSearch Processing.");
 
         // json으로 넘어온 파라미터를 map으로 변환
 		ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
         try {
-			map = mapper.readValue(info,new TypeReference<HashMap<String, String>>() {});
+			map = mapper.readValue(params,new TypeReference<HashMap<String, String>>() {});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -88,7 +87,7 @@ public class MainController {
 
         UserVO userVO = new UserVO();
         logger.debug("mode={}", mode);
-        List<UserVO> userList = new ArrayList<UserVO>();
+        List<UserVO> userList = new ArrayList<>();
 
 		if (!mode.equals("idcardUserSearch"))
             return userList;
@@ -101,24 +100,32 @@ public class MainController {
 		userVO.setTUserName(userName);
 		userVO.setTUserHp(userHp);
 		userVO.setTUserBirth(userBirth);
-		userList = userService.selectUser(userVO);
-        int result = userList.size();
-        userVO.setResult(result);
+        userVO.setResult(0);
+        logger.debug("{}, {}, {}, {}, {}, {}", userVO.getSearchType(), userVO.getSearchKey(), userVO.getTUserNo(), userVO.getTUserName(), userVO.getTUserHp(), userVO.getTUserBirth());
 
+		userList = userService.selectUser(userVO);
+        
+        int result = userList.size();
+        for(UserVO list: userList)
+            list.setResult(result);
         return userList;
+
+        // 아래와 같이 json format으로 보내어도 client에서 결과를 볼 수 있다.
+        // String postJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(userList);
+        // return postJson;
     }
 
     @ResponseBody
     @RequestMapping(value = "/mainDelete", method = RequestMethod.POST)
-    public UserVO mainDelete(@RequestBody String info) throws Exception {
+    public UserVO mainDelete(@RequestBody String params) throws Exception {
 
         logger.debug("MainController /mainDelete Processing.");
 
         // json으로 넘어온 파라미터를 map으로 변환
 		ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
         try {
-			map = mapper.readValue(info,new TypeReference<HashMap<String, String>>() {});
+			map = mapper.readValue(params,new TypeReference<HashMap<String, String>>() {});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
